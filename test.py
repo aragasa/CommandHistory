@@ -5,29 +5,27 @@ import time
 
 
 while 1:
+     # Issue!This is getting frames from last input
+    start = time.time()
     events = inputs.get_gamepad()
+   
     for event in events:
-        #
-        #startTime = time.perf_counter()
-        currentState = event.state
-        lastState = None
-
-        if not event.code == 'SYN_REPORT' and not currentState == lastState:
-            #stop getting time and post elapsed time then reset
-            lastState = currentState
+       
+        if not event.code == 'SYN_REPORT':
+           
             currentState = event.state
             
+            end = time.time()
+            elapsed = int((end - start) * 60)
+
+            if elapsed >= 999:
+                print('frames: 999+')
+            else:
+                print('frames: ', elapsed)
+
             print('Button: ', event.code)
-            print('State:', event.state)
-            endTime = time.perf_counter()
-            #elapsedTime = endTime - startTime
-            #frames = int(elapsedTime / 60)
-            #print('frames: ', elapsedTime)
-            #print('start: ', startTime)
-            #print('end: ', endTime)
-
-
-
+            print('State:', currentState)
+            
 
 #for device in devices:
  #   print(device)
